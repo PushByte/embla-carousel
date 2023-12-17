@@ -85,6 +85,15 @@ function Autoplay(userOptions: AutoplayOptionsType = {}): AutoplayType {
       if (wasPlaying) startTimer()
     })
 
+    eventStore.add(ownerDocument, 'pausecarousel', () => {
+      wasPlaying = playing
+      return clearTimer()
+    })
+
+    eventStore.add(ownerDocument, 'resumecarousel', () => {
+      if (wasPlaying) startTimer()
+    })
+
     if (options.playOnInit) {
       emblaApi.on('init', startTimer).on('reInit', startTimer)
     }
